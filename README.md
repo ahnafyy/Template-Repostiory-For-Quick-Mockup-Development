@@ -1,5 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+React Serverless APP using AWS Lambda Functions connected to DynamoDB
 ## Available Scripts
 
 In the project directory, you can run:
@@ -43,26 +42,47 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Deploy with CloudFormation
 
-### Analyzing the Bundle Size
+Prerequisites: [Node.js](https://nodejs.org/en/) and [AWS CLI](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) installed
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+* Create an [AWS](https://aws.amazon.com/) Account and [IAM User](https://aws.amazon.com/iam/) with the `AdministratorAccess` AWS [Managed Policy](http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html)
+* Run `aws configure` to put store that user's credentials in `~/.aws/credentials`
+* Create an S3 bucket for storing the Lambda code and store its name in a shell variable with:
+  * `export CODE_BUCKET=<bucket name>`
+* Npm install:
+  * `npm install`
+* Build:
+  * `npm run build`
+* Upload package to S3, transform the CloudFormation template:
+  * `npm run package`
+* Deploy to CloudFormation:
+  * `npm run deploy`
 
-### Making a Progressive Web App
+## Deploy from the AWS Serverless Application Repository
+* Hit "Deploy" from the [application](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:233054207705:applications~serverless-todo) page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Use
+1. In the [API Gateway Console](https://console.aws.amazon.com/apigateway)
+1. Navigate to APIs / aws-serverless-repository-serverless-todo / Settings
+    1. Hit Add Binary Media Type
+    1. Enter `*/*` in the box
+    1. Hit Save Changes
+    1. Navigate to APIs / aws-serverless-repository-serverless-todo / Resources
+    1. Click the Actions dropdown
+    1. Click Deploy API
+        1. Deployment stage: **prod**
+        1. Deployment description: *Adding binary support*
+        1. Hit Deploy
+1. Navigate to APIs / aws-serverless-repository-serverless-todo / Dashboard
+    1. Find the Invocation url, something like *https://xxxxxxxxx.execute-api.region.amazonaws.com/Prod/*
+    1. (You can also set up [custom domain name](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-custom-domains.html))
+1. Open the invocation url in your browser
 
-### Advanced Configuration
+## Links
+* [serverless-todo](https://github.com/evanchiu/serverless-todo) on Github
+* [serverless-todo](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:233054207705:applications~serverless-todo) on the AWS Serverless Application Repository
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
